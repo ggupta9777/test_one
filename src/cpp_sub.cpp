@@ -1,23 +1,12 @@
 #include "ros/ros.h"
 #include "performance_tests/SuperAwesome.h"
 
-double time_start = 0;
-double time_prev = 0;
-/**
- * This tutorial demonstrates simple receipt of messages over the ROS system.
- */
+double counts = 0;
+
 void listenerCallback (const performance_tests::SuperAwesome::ConstPtr& msg)
 {
   std::string recv_data = msg->data;
-  double time_now = ros::Time::now().toSec ();
-  // randomly sample a rate every 2 seconds
-  if (time_now - time_start >= 2.0)
-  {
-    time_start = time_now;
-    double sub_rate = 1/(time_now - time_prev);
-    std::cout << "sub rate cpp: " << sub_rate << std::endl;
-  }
-  time_prev = time_now;
+  counts = counts + 1; 
 }
 
 int main(int argc, char **argv)
@@ -26,10 +15,20 @@ int main(int argc, char **argv)
 
   ros::NodeHandle nh;
 
-  ros::Subscriber sub = nh.subscribe("super_awesome_topic", 1000, listenerCallback);
-  time_start = ros::Time::now ().toSec ();
-  time_prev = ros::Time::now().toSec ();
-  ros::spin();
-
+  ros::Subscriber sub = nh.subscribe("super_awesome_topic", 1, listenerCallback);
+  double time_start = ros::Time::now ().toSec ();
+  double time_now = ros::Time::now().toSec ();
+  while (ros::ok ())
+  {
+    time_now = ros::Time::now().toSec();
+    if (time_now - time_start >= 2.0)
+    { 
+      double average_rate = counts/(time_now - time_start);
+      ROS_INFO ("CPP: average sub rate for past 2 seconds: %f", average_rate);
+      time_start = time_now;
+      counts = 0;
+    }
+    ros::spinOnce();
+  }
   return 0;
 }
