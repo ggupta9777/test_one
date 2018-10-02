@@ -1,0 +1,4 @@
+<launch>
+  <node name="py_pub_node" pkg="performance_tests" type="py_pub.py" output="screen"/>
+  <node name="cpp_sub_node" pkg="performance_tests" type="cpp_sub_node" output="screen"/>
+</launch>
