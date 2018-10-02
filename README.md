@@ -19,4 +19,4 @@ The launch/ directory contains 4 launch files, one for the above cases each. Run
 
 3. c++ publisher to python subscriber (cpppub_pysub.launch): The max publish rate falls around 25 KHz, even for much higher demanded loop rates.
 
-4. c++ publisher to cpp subscriber (cpppub_cppsub.launch): The max rate stays between 25-30 KHz, comparable to the previous findings but slightly higher upon empirical observation.
+4. c++ publisher to cpp subscriber (cpppub_cppsub.launch): The max rate stays between 25-30 KHz, comparable to the previous finding.
