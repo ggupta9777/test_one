@@ -1,8 +1,15 @@
 #include "ros/ros.h"
 #include "performance_tests/SuperAwesome.h"
 
+// number of callbacks between any two seconds
 double counts = 0;
 
+/**
+ * @brief callback for the custom message
+ * @details reads the message, updates the count
+ * 
+ * @param msg [description]
+ */
 void listenerCallback (const performance_tests::SuperAwesome::ConstPtr& msg)
 {
   std::string recv_data = msg->data;

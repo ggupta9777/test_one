@@ -1,0 +1,5 @@
+<launch>
+  <node name="cpp_pub_node" pkg="performance_tests" type="cpp_pub_node" output="screen"/>
+  <node name="py_sub_node" pkg="performance_tests" type="py_sub.py" output="screen"/>
+  <node name="rqt_reconfigure_node" pkg="rqt_reconfigure" type="rqt_reconfigure"/>
+</launch>

@@ -6,11 +6,18 @@
 int loop_rate = 100;
 ros::Rate * rate;
 
+/**
+ * @brief callback for dynamic reconfig
+ * @details reads the config message and writes the rate to global variable
+ * 
+ * @param config [description]
+ * @param level [description]
+ */
 void callback (performance_tests::DynRateConfig &config, uint32_t level)
 {
   loop_rate = config.rate_param;
   rate = new ros::Rate (loop_rate);
-  std::cout << "CPP pub rate requested: " << loop_rate << std::endl;
+  ROS_WARN("CPP: pub rate requested: %d", loop_rate);
 }
 
 int main(int argc, char **argv)
@@ -20,7 +27,6 @@ int main(int argc, char **argv)
   rate = new ros::Rate (10);
   dynamic_reconfigure::Server<performance_tests::DynRateConfig> server;
   dynamic_reconfigure::Server<performance_tests::DynRateConfig>::CallbackType f;
-
   f = boost::bind(&callback, _1, _2);
   server.setCallback(f);
   ros::Publisher pub = nh.advertise <performance_tests::SuperAwesome> ("super_awesome_topic", 1);
